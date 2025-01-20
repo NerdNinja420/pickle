@@ -1,0 +1,5 @@
+tetrix_venv/
+.git/
+__pycache__/
+mod/__pycache__/
+mod/__pycache__/*
