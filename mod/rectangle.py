@@ -1,4 +1,5 @@
 from __future__ import annotations
+from typing import Callable
 
 import pygame
 from pygame import Surface
@@ -10,10 +11,6 @@ from .constands import (
     RECT_SIZE_HEIGHT_LIMITS,
     RECT_POSITION_X_LIMITS,
     RECT_POSITION_Y_LIMITS,
-    # VELOCITY_REDUCE_FACTOR,
-    MIN_VELOCITY_THRESHOLD,
-    STATIC_OBJ_WIDTH,
-    STATIC_OBJ_HEIGHT,
     WIN_HEIGHT,
     WIN_WIDTH,
     GAB,
@@ -56,9 +53,6 @@ class Rectangle:
             self.vel.x = -self.vel.x
         if not (0 <= self.coordinates.y + self.vel.y <= WIN_HEIGHT - self.dimensions.y):
             self.vel.y = -self.vel.y
-            if self.vel.abs() < MIN_VELOCITY_THRESHOLD:
-                self.vel.x = 0
-                self.vel.y = 0
 
     @classmethod
     def rand(cls) -> Rectangle:
@@ -73,19 +67,19 @@ class Rectangle:
                 return Rectangle(coordinates, size, Color.rand(), Vector2(0, 0))
 
     @classmethod
-    def static(cls, col: int) -> list[Rectangle]:
-        objects: list[Rectangle] = []
-        for j in range(col):
-            for i in range(int(WIN_WIDTH / (STATIC_OBJ_WIDTH + GAB))):
-                x = (GAB + STATIC_OBJ_WIDTH) * i + GAB
-                y = (GAB + STATIC_OBJ_HEIGHT) * j + GAB
+    def static(cls, row: int, col: int) -> list[Rectangle]:
+        WIDTH: int = int((WIN_WIDTH - (GAB * (row + 1))) / row)
+        HEIGHT: int = int(WIDTH * 0.3)
+        x: Callable[[int], int] = lambda i: (GAB + WIDTH) * i + GAB  # noqa: E731
+        y: Callable[[int], int] = lambda j: (GAB + HEIGHT) * j + GAB  # noqa: E731
 
-                obj = Rectangle(
-                    Coordinate(x, y),
-                    Size(STATIC_OBJ_WIDTH, STATIC_OBJ_HEIGHT),
-                    Color.rand(),
-                )
-
-                objects.append(obj)
-
-        return objects
+        return [
+            Rectangle(
+                Coordinate(x(i), y(j)),
+                Size(WIDTH, HEIGHT),
+                Color.rand(),
+            )
+            for j in range(col)
+            for i in range(int(WIN_WIDTH / (WIDTH + GAB)))
+        ]
+        
