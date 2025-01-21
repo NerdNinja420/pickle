@@ -3,57 +3,50 @@ from pygame import Surface
 
 
 # from .geometry import Vector2
-from .circle import Circle
+from .rectangle import Rectangle
+from .geometry import Size, Vector2
 from .color import Color
 
-from .constands import ACCELERATION, GRAVITY, VELOCITY_REDUCE_FACTOR
+from .constands import (
+    ACCELERATION,
+    PEDAL_SIZE_WIDTH,
+    PEDAL_SIZE_HEIGHT,
+    PEDAL_COORDINATES,
+    MOVING_OBJ_WIDTH,
+    MOVING_OBJ_HEIGHT,
+    MOVING_OBJ_COORDINATES,
+)
 
 
 class Game:
-    def __init__(self, surface: Surface, obj_count: int, choosen: Circle | None = None) -> None:
+    def __init__(self, surface: Surface, col: int) -> None:
         self.surface = surface
-        self.objects = [Circle.rand() for _ in range(obj_count)]
-        self.choosen = choosen if choosen is not None else self.objects[0]
-        self.choosen.color = Color.CHOSEN
+        self.static_objects = Rectangle.static(col)
+        self.pedal_object = Rectangle(
+            PEDAL_COORDINATES,
+            Size(PEDAL_SIZE_WIDTH, PEDAL_SIZE_HEIGHT),
+            Color.rand(),
+        )
+        self.moving_object = Rectangle(
+            MOVING_OBJ_COORDINATES,
+            Size(MOVING_OBJ_WIDTH, MOVING_OBJ_HEIGHT),
+            Color.rand(),
+            Vector2(5, 5),
+        )
 
     def bg(self):
         self.surface.fill(Color.BASE.rgb())
 
-    def add_obj(self):
-        self.objects.append(Circle.rand())
-
     def motion(self):
-        for obj in self.objects:
-            obj.handle_collision()
-            obj.uniform()
-
-    def reduce_velocity(self):
-        for obj in self.objects:
-            obj.reduce_vel(VELOCITY_REDUCE_FACTOR)
+        self.moving_object.handle_collision()
+        self.moving_object.uniform()
 
     def acceleration(self):
-        for obj in self.objects:
-            obj.accelerate(ACCELERATION)
-
-    def gravitation(self):
-        for obj in self.objects:
-            obj.accelerate(GRAVITY)
-            print(obj.vel.abs())
+        self.pedal_object.accelerate(ACCELERATION)
 
     def render(self):
-        for object in self.objects:
+        for object in self.static_objects:
             object.draw(self.surface)
+        self.pedal_object.draw(self.surface)
+        self.moving_object.draw(self.surface)
         pygame.display.update()
-
-    def handle_collision(self):
-        for _ in range(len(self.objects)):
-            for obj in self.objects:
-                for other in self.objects:
-                    dist_vector = obj.center - other.center
-                    distance = dist_vector.abs()
-                    if distance < 100 and distance > 0:
-                        direction_vector = dist_vector / distance
-                        obj.vel += direction_vector * 0.1
-                        other.vel -= direction_vector * 0.1
-
-    # def handle_input(self):

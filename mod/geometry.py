@@ -1,5 +1,5 @@
 from __future__ import annotations
-# from typing import override
+from typing import override
 
 
 class Vector2:
@@ -65,15 +65,14 @@ class Coordinate(Vector2):
     def __repr__(self) -> str:
         return f"Coordinate(x='{self.x}', y='{self.y}')"
 
-    # @override
-    # @classmethod
-    # def rand(cls, limit_x: Vector2, limit_y: Vector2) -> Coordinate:
-    #     from random import randint
-    #
-    #     x: int = randint(int(limit_x.x), int(limit_x.y))
-    #     y: int = randint(int(limit_y.x), int(limit_y.y))
-    #     return cls(x, y)
-    #
+    @override
+    @classmethod
+    def rand(cls, limit_x: Vector2, limit_y: Vector2) -> Coordinate:
+        from random import randint
+
+        x: int = randint(int(limit_x.x), int(limit_x.y))
+        y: int = randint(int(limit_y.x), int(limit_y.y))
+        return cls(x, y)
 
 
 class Size(Vector2):
@@ -85,12 +84,11 @@ class Size(Vector2):
     def __repr__(self) -> str:
         return f"Size(width='{self.x}', height='{self.y}')"
 
-    #
-    # @override
-    # @classmethod
-    # def rand(cls, limit_x: Vector2, limit_y: Vector2) -> Size:
-    #     from random import randint
-    #
-    #     x: int = randint(int(limit_x.x), int(limit_x.y))
-    #     y: int = randint(int(limit_y.x), int(limit_y.y))
-    #     return cls(x, y)
+    @override
+    @classmethod
+    def rand(cls, limit_x: Vector2, limit_y: Vector2) -> Size:
+        from random import randint
+
+        x: int = randint(int(limit_x.x), int(limit_x.y))
+        y: int = randint(int(limit_y.x), int(limit_y.y))
+        return cls(x, y)
