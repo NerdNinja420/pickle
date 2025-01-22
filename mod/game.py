@@ -41,14 +41,34 @@ class Game:
         self.pedal_object.uniform()
 
         self.moving_object.handle_collision()
+        #
+        # def handle_collision(self):
+        #     if (
+        #         self.moving_object.coordinates.y + self.moving_object.dimensions.height
+        #         >= self.pedal_object.coordinates.y
+        #         and self.moving_object.coordinates.x + self.moving_object.dimensions.width
+        #         <= self.pedal_object.coordinates.x + self.pedal_object.dimensions.width
+        #         and self.moving_object.coordinates.x >= self.pedal_object.coordinates.x
+        #     ):
+        #         self.moving_object.vel.y = -self.moving_object.vel.y
+        #
+        #     if (
+        #         (self.pedal_object.coordinates.x + self.pedal_object.dimensions.width)
+        #         >= self.moving_object.coordinates.x
+        #         and (self.pedal_object.coordinates.y > self.moving_object.coordinates.y)
+        #         and self.pedal_object.coordinates.y + self.pedal_object.dimensions.height
+        #         <= self.moving_object.coordinates.y + self.moving_object.dimensions.height
+        #     ):
+        #         self.moving_object.vel = -self.moving_object.vel
+        #
 
     def handle_collision(self):
         if (
             self.moving_object.coordinates.y + self.moving_object.dimensions.height
             >= self.pedal_object.coordinates.y
             and self.moving_object.coordinates.x + self.moving_object.dimensions.width
-            < self.pedal_object.coordinates.x + self.pedal_object.dimensions.width
-            and self.moving_object.coordinates.x > self.pedal_object.coordinates.x
+            <= self.pedal_object.coordinates.x + self.pedal_object.dimensions.width
+            and self.moving_object.coordinates.x >= self.pedal_object.coordinates.x
         ):
             self.moving_object.vel.y = -self.moving_object.vel.y
 
@@ -58,6 +78,12 @@ class Game:
 
         self.pedal_object.draw(self.surface)
         self.moving_object.draw(self.surface)
+        pygame.draw.line(
+            self.surface,
+            Color.RED.rgb(),
+            (*self.moving_object.coordinates,),
+            (*(self.moving_object.coordinates + self.moving_object.vel * 200),),
+        )
 
         pygame.display.update()
 

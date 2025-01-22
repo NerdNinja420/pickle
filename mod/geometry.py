@@ -64,8 +64,6 @@ class Coordinate(Vector2):
 
     def __repr__(self) -> str:
         return f"Coordinate(x='{self.x}', y='{self.y}')"
-
-    @override
     @classmethod
     def rand(cls, limit_x: Vector2, limit_y: Vector2) -> Coordinate:
         from random import randint

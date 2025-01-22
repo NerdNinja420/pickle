@@ -51,7 +51,7 @@ class Rectangle:
     def handle_collision(self):
         if not (0 <= self.coordinates.x + self.vel.x <= WIN_WIDTH - self.dimensions.x):
             self.vel.x = -self.vel.x
-        if not (0 <= self.coordinates.y + self.vel.y <= WIN_HEIGHT - self.dimensions.y):
+        if not (0 <= self.coordinates.y + self.vel.y):
             self.vel.y = -self.vel.y
 
     @classmethod
@@ -82,4 +82,3 @@ class Rectangle:
             for j in range(col)
             for i in range(int(WIN_WIDTH / (WIDTH + GAB)))
         ]
-        
