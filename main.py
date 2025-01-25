@@ -7,7 +7,8 @@ from mod.constands import FPS, WIN_WIDTH, WIN_HEIGHT
 
 # set the window position to a constant in hyprland
 # os.environ["SDL_VIDEO_WINDOW_POS"] = "{},{}".format(200, 100)
-os.environ['SDL_VIDEO_WINDOW_POS'] = '-1650,100'  # Position window on the second monitor
+os.environ["SDL_VIDEO_WINDOW_POS"] = "-1650,20"
+
 
 def main():
     pygame.init()
@@ -28,7 +29,7 @@ def main():
         game.handle_input()
         game.handle_collision()
 
-        CLOCK.tick(FPS)
+        game.set_time(delta=CLOCK.tick(FPS) / 1000)
 
 
 if __name__ == "__main__":

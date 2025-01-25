@@ -39,10 +39,13 @@ class Vector2:
 
         return sqrt(self.x**2 + self.y**2)
 
+    def normalize(self) -> Vector2:
+        return Vector2(self.x / self.abs(), self.y / self.abs())
+
     def dot(self, other: Vector2) -> float:
         return self.x * other.x + self.y * other.y
 
-    def copy(self) -> Vector2:
+    def clone(self) -> Vector2:
         return self.__class__(self.x, self.y)
 
     @classmethod
@@ -64,6 +67,7 @@ class Coordinate(Vector2):
 
     def __repr__(self) -> str:
         return f"Coordinate(x='{self.x}', y='{self.y}')"
+
     @classmethod
     def rand(cls, limit_x: Vector2, limit_y: Vector2) -> Coordinate:
         from random import randint
@@ -76,8 +80,8 @@ class Coordinate(Vector2):
 class Size(Vector2):
     def __init__(self, x: int = 0, y: int = 0) -> None:
         super().__init__(x, y)
-        self.width = x
-        self.height = y
+        self.w = x
+        self.h = y
 
     def __repr__(self) -> str:
         return f"Size(width='{self.x}', height='{self.y}')"

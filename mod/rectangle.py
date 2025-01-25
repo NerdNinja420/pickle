@@ -23,35 +23,36 @@ class Rectangle:
     def __init__(
         self, coordinates: Coordinate, size: Size, color: Color, vel: Vector2 | None = None
     ) -> None:
-        self.coordinates = coordinates
-        self.dimensions = size
+        self.coord = coordinates
+        self.dim = size
         self.color = color
         self.vel = vel if vel is not None else Vector2(0, 0)
 
     def __str__(self) -> str:
         return (
-            f"Rectangle(x='{self.coordinates.x}', "
-            + f"y='{self.coordinates.y}', "
-            + f"color='{self.color}')"
+            f"Rectangle(x='{self.coord.x}', " + f"y='{self.coord.y}', " + f"color='{self.color}')"
         )
 
     def draw(self, surface: Surface):
         pygame.draw.rect(
             surface,
             self.color.rgb(),
-            (*self.coordinates, *self.dimensions),
+            (*self.coord, *self.dim),
         )
 
-    def uniform(self):
-        self.coordinates = self.coordinates + self.vel
+    def uniform(self, delta: float):
+        self.coord = self.coord + (self.vel * delta)
 
-    def accelerate(self, acce: Vector2):
-        self.vel = self.vel + acce
+    def accelerate(self, acce: Vector2, same_dir: bool):
+        if same_dir:
+            self.vel = self.vel + self.vel.normalize() * acce.abs()
+        else:
+            self.vel = self.vel + acce
 
-    def handle_collision(self):
-        if not (0 <= self.coordinates.x + self.vel.x <= WIN_WIDTH - self.dimensions.x):
+    def handle_collision_screen(self):
+        if not (0 <= self.coord.x + self.vel.x <= WIN_WIDTH - self.dim.x):
             self.vel.x = -self.vel.x
-        if not (0 <= self.coordinates.y + self.vel.y):
+        if not (0 <= self.coord.y + self.vel.y <= WIN_HEIGHT - self.dim.y):
             self.vel.y = -self.vel.y
 
     @classmethod
