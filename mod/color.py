@@ -4,7 +4,7 @@ from enum import Enum
 
 class Color(Enum):
     ROSEWATER = (245, 224, 220)
-    # FLAMINGO = (242, 205, 205)
+    FLAMINGO = (242, 205, 205)
     PINK = (245, 194, 231)
     MAUVE = (203, 166, 247)
     RED = (243, 139, 168)
@@ -29,6 +29,7 @@ class Color(Enum):
     BASE = (30, 30, 46)
     MANTLE = (24, 24, 37)
     CRUST = (17, 17, 27)
+    HIT = (210, 15, 57)
     CHOSEN = (242, 205, 205)
 
     def __str__(self):
