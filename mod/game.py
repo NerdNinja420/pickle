@@ -2,7 +2,7 @@ import pygame
 from pygame import Surface
 
 from .rectangle import Rectangle
-from .geometry import Size, Vector2
+from .geometry import Size
 from .color import Color
 
 from .constands import (
