@@ -1,7 +1,6 @@
 import pygame
 from pygame import Surface
 
-# from .geometry import Vector2
 from .rectangle import Rectangle
 from .geometry import Size, Vector2
 from .color import Color
