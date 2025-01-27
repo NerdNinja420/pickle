@@ -9,7 +9,7 @@
 ## Installation
 
 ```bash
-   git clone https://github.com/YourUsername/arkanoid-like-game.git
+   git clone https://github.com/NerdNinja420/arkanoid-like-game.git
    cd arkanoid-like-game
    pip install pygame
    python main.py
