@@ -21,7 +21,11 @@ Key = pygame.key.ScancodeWrapper
 
 class Rectangle:
     def __init__(
-        self, coordinates: Coordinate, size: Size, color: Color, vel: Vector2 | None = None
+        self,
+        coordinates: Coordinate,
+        size: Size,
+        color: Color | tuple[int, int, int],
+        vel: Vector2 | None = None,
     ) -> None:
         self.coord = coordinates
         self.dim = size
@@ -36,9 +40,20 @@ class Rectangle:
     def draw(self, surface: Surface):
         pygame.draw.rect(
             surface,
-            self.color.rgb(),
+            (*self.color,),
             (*self.coord, *self.dim),
         )
+
+    # TODO : draw the line from the corner pointing in the direction of velocity!
+    def draw_vel_vec(self, surface: Surface):
+        pygame.draw.line(
+            surface,
+            (*Color.TEXT,),
+            (*self.coord,),
+            (*(self.coord + self.vel * 200),),
+        )
+
+    print(*((1, 2, 3),))
 
     def uniform(self, delta: float):
         self.coord = self.coord + (self.vel * delta)
@@ -68,9 +83,21 @@ class Rectangle:
                 return Rectangle(coordinates, size, Color.rand(), Vector2(0, 0))
 
     @classmethod
-    def static(cls, row: int, col: int) -> list[Rectangle]:
+    def static(
+        cls,
+        row: int,
+        col: int,
+        color_limits: list[tuple[int, int, int]] | None = None,
+    ) -> list[Rectangle]:
+
         WIDTH: int = int((WIN_WIDTH - (GAB * (row + 1))) / row)
-        HEIGHT: int = int(WIDTH * 0.3)
+        HEIGHT: int = int(WIDTH * 0.15)
+        COLORS = (
+            [[Color.rand() for _ in range(row)] for _ in range(col)]
+            if not color_limits
+            else Color.range(color_limits, row * col, row)
+        )
+
         x: Callable[[int], int] = lambda i: (GAB + WIDTH) * i + GAB  # noqa: E731
         y: Callable[[int], int] = lambda j: (GAB + HEIGHT) * j + GAB  # noqa: E731
 
@@ -78,8 +105,8 @@ class Rectangle:
             Rectangle(
                 Coordinate(x(i), y(j)),
                 Size(WIDTH, HEIGHT),
-                Color.rand(),
+                COLORS[j][i],
             )
             for j in range(col)
-            for i in range(int(WIN_WIDTH / (WIDTH + GAB)))
+            for i in range(WIN_WIDTH // (WIDTH + GAB))
         ]

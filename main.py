@@ -1,13 +1,16 @@
-import os
+from os import environ
+
+from platform import system
+
 import pygame
 from pygame.locals import QUIT
 
 from mod.game import Game
 from mod.constands import FPS, WIN_WIDTH, WIN_HEIGHT
 
-# set the window position to a constant in hyprland
-# os.environ["SDL_VIDEO_WINDOW_POS"] = "{},{}".format(200, 100)
-os.environ["SDL_VIDEO_WINDOW_POS"] = "-1650,20"
+# environ["SDL_VIDEO_WINDOW_POS"] = "{},{}".format(-1650, 100)
+if system() == "Linux":
+    environ["SDL_VIDEO_WINDOW_POS"] = "{},{}".format(-1650, 100)
 
 
 def main():
@@ -15,7 +18,7 @@ def main():
     WIN = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
     CLOCK = pygame.time.Clock()
 
-    game = Game(WIN, 10, 5)
+    game = Game(WIN, 10, 11)
 
     # Event loop
     while True:
@@ -26,6 +29,7 @@ def main():
         game.bg()
         game.render()
         game.motion()
+        game.handle_crash()
         game.handle_input()
         game.handle_collision()
 
