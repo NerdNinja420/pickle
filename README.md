@@ -1,4 +1,4 @@
-# Arkanoid-like Game
+# Soyana - Arkanoid-like Game
 ![ScreenShot_1](./assets/pong.png)
 
 ## Requirements
