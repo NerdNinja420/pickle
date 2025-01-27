@@ -24,13 +24,14 @@ def main():
     while True:
         for event in pygame.event.get():
             if event.type == QUIT:
-                return
-
-        game.bg()
+                pygame.quit()
+                quit()
+        # game.draw_end_msg()
         game.render()
         game.motion()
         game.handle_crash()
         game.handle_input()
+        game.handle_score_life()
         game.handle_collision()
 
         game.set_time(delta=CLOCK.tick(FPS) / 1000)

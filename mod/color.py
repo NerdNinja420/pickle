@@ -97,7 +97,6 @@ class Color(Enum):
             end = limits[segment + 1]
 
             current_segment_steps = steps_per_segment + (1 if segment < remainder_steps else 0)
-            print(remainder_steps)
             for step in range(current_segment_steps):
                 alpha = step / current_segment_steps
                 r = round(start[0] + (end[0] - start[0]) * alpha)

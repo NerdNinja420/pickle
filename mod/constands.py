@@ -1,9 +1,11 @@
-from typing import Final
+from typing import Callable, Final
 
-from .geometry import Vector2, Coordinate
+
+from .geometry import Size, Vector2, Coordinate
 
 FPS: Final[int] = 60
 EPS: float = 5
+GAB: Final[int] = 20
 
 WIN_WIDTH: Final[int] = 1800
 WIN_HEIGHT: Final[int] = 1000
@@ -30,19 +32,17 @@ PEDAL_COORDINATES: Final[Coordinate] = Coordinate(
 
 BALL_WIDTH: Final[int] = int(WIN_WIDTH / 70)
 BALL_HEIGHT: Final[int] = BALL_WIDTH
-BALL_VEL: Vector2 = Vector2(1, -1)
-BALL_MAX_VEL: Vector2 = Vector2(10, 10)
-BALL_COORDINATES: Final[Coordinate] = Coordinate(
-    (WIN_WIDTH - (BALL_WIDTH // 2)) // 2, (WIN_HEIGHT - BALL_HEIGHT // 2) // 2
+BALL_SIZE: Final[Size] = Size(BALL_WIDTH, BALL_HEIGHT)
+BALL_VEL: Vector2 = Vector2(1, 1)
+BALL_MAX_VEL: Vector2 = Vector2(20, 20)
+BALL_COORDINATES: Callable[[int], Coordinate] = lambda i: Coordinate(  # noqa: E731
+    GAB * 2, GAB * 16 + (GAB + BALL_HEIGHT) * i
 )
 
-# STATICS_WIDTH: Final[int] = 30
-# STATICS_HEIGHT: Final[int] = 25
 
-GAB: Final[int] = 20
 COL: Final[int] = 3
 ROW: Final[int] = 5
-
+BALLS: Final[int] = 3
 
 COLOR_LOWER: tuple[int, int, int] = (255, 0, 0)
 COLOR_MID: tuple[int, int, int] = (0, 255, 0)

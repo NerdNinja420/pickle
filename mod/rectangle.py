@@ -16,8 +16,6 @@ from .constands import (
     GAB,
 )
 
-Key = pygame.key.ScancodeWrapper
-
 
 class Rectangle:
     def __init__(
@@ -53,7 +51,7 @@ class Rectangle:
             (*(self.coord + self.vel * 200),),
         )
 
-    print(*((1, 2, 3),))
+    # print(*((1, 2, 3),))
 
     def uniform(self, delta: float):
         self.coord = self.coord + (self.vel * delta)
@@ -67,7 +65,7 @@ class Rectangle:
     def handle_collision_screen(self):
         if not (0 <= self.coord.x + self.vel.x <= WIN_WIDTH - self.dim.x):
             self.vel.x = -self.vel.x
-        if not (0 <= self.coord.y + self.vel.y <= WIN_HEIGHT - self.dim.y):
+        elif not (0 <= self.coord.y + self.vel.y <= WIN_HEIGHT - self.dim.y):
             self.vel.y = -self.vel.y
 
     @classmethod
@@ -87,10 +85,12 @@ class Rectangle:
         cls,
         row: int,
         col: int,
+        padding: tuple[int, int, int],
         color_limits: list[tuple[int, int, int]] | None = None,
     ) -> list[Rectangle]:
+        l_pad, t_pad, r_pad = padding
 
-        WIDTH: int = int((WIN_WIDTH - (GAB * (row + 1))) / row)
+        WIDTH: int = int((WIN_WIDTH - (GAB * (row - 1)) - (r_pad + l_pad)) / row)
         HEIGHT: int = int(WIDTH * 0.15)
         COLORS = (
             [[Color.rand() for _ in range(row)] for _ in range(col)]
@@ -98,8 +98,8 @@ class Rectangle:
             else Color.range(color_limits, row * col, row)
         )
 
-        x: Callable[[int], int] = lambda i: (GAB + WIDTH) * i + GAB  # noqa: E731
-        y: Callable[[int], int] = lambda j: (GAB + HEIGHT) * j + GAB  # noqa: E731
+        x: Callable[[int], int] = lambda i: (i * (WIDTH + GAB) + l_pad)  # noqa: E731
+        y: Callable[[int], int] = lambda j: (j * (GAB + HEIGHT) + +t_pad)  # noqa: E731
 
         return [
             Rectangle(
@@ -108,5 +108,5 @@ class Rectangle:
                 COLORS[j][i],
             )
             for j in range(col)
-            for i in range(WIN_WIDTH // (WIDTH + GAB))
+            for i in range(row)
         ]
