@@ -30,7 +30,7 @@ class Game:
             MOVING_OBJ_COORDINATES,
             Size(MOVING_OBJ_WIDTH, MOVING_OBJ_HEIGHT),
             Color.rand(),
-            Vector2(10, 10),
+            Vector2(5, 5),
         )
 
     def bg(self):
@@ -40,37 +40,23 @@ class Game:
         self.moving_object.uniform()
         self.pedal_object.uniform()
 
-        self.moving_object.handle_collision()
-        #
-        # def handle_collision(self):
-        #     if (
-        #         self.moving_object.coordinates.y + self.moving_object.dimensions.height
-        #         >= self.pedal_object.coordinates.y
-        #         and self.moving_object.coordinates.x + self.moving_object.dimensions.width
-        #         <= self.pedal_object.coordinates.x + self.pedal_object.dimensions.width
-        #         and self.moving_object.coordinates.x >= self.pedal_object.coordinates.x
-        #     ):
-        #         self.moving_object.vel.y = -self.moving_object.vel.y
-        #
-        #     if (
-        #         (self.pedal_object.coordinates.x + self.pedal_object.dimensions.width)
-        #         >= self.moving_object.coordinates.x
-        #         and (self.pedal_object.coordinates.y > self.moving_object.coordinates.y)
-        #         and self.pedal_object.coordinates.y + self.pedal_object.dimensions.height
-        #         <= self.moving_object.coordinates.y + self.moving_object.dimensions.height
-        #     ):
-        #         self.moving_object.vel = -self.moving_object.vel
-        #
-
-    def handle_collision(self):
+    def handle_collision_walls(self):
         if (
-            self.moving_object.coordinates.y + self.moving_object.dimensions.height
-            >= self.pedal_object.coordinates.y
-            and self.moving_object.coordinates.x + self.moving_object.dimensions.width
-            <= self.pedal_object.coordinates.x + self.pedal_object.dimensions.width
-            and self.moving_object.coordinates.x >= self.pedal_object.coordinates.x
+            self.moving_object.cord.y + self.moving_object.dim.h >= self.pedal_object.cord.y
+            and self.moving_object.cord.y < self.pedal_object.dim.h + self.pedal_object.cord.y
+            and self.moving_object.cord.x + self.moving_object.dim.w >= self.pedal_object.cord.x
+            and self.moving_object.cord.x <= self.pedal_object.cord.x + self.pedal_object.dim.w
         ):
             self.moving_object.vel.y = -self.moving_object.vel.y
+
+    def handle_collision_objects(self):
+        pass
+
+    def handle_collision(self):
+        self.handle_collision_walls()
+        self.handle_collision_objects()
+
+        self.moving_object.handle_collision()
 
     def render(self):
         for object in self.static_objects:
@@ -78,21 +64,21 @@ class Game:
 
         self.pedal_object.draw(self.surface)
         self.moving_object.draw(self.surface)
+
         pygame.draw.line(
             self.surface,
             Color.RED.rgb(),
-            (*self.moving_object.coordinates,),
-            (*(self.moving_object.coordinates + self.moving_object.vel * 200),),
+            (*self.moving_object.cord,),
+            (*(self.moving_object.cord + self.moving_object.vel * 200),),
         )
-
         pygame.display.update()
 
     def handle_input(self):
         key = pygame.key.get_pressed()
 
         if key[pygame.K_a]:
-            if self.pedal_object.coordinates.x > 0:
-                self.pedal_object.coordinates.x -= VELOCITY_2.x
+            if self.pedal_object.cord.x > 0:
+                self.pedal_object.cord.x -= VELOCITY_2.x
         if key[pygame.K_d]:
-            if self.pedal_object.coordinates.x + self.pedal_object.dimensions.width < WIN_WIDTH:
-                self.pedal_object.coordinates.x += VELOCITY_2.x
+            if self.pedal_object.cord.x + self.pedal_object.dim.w < WIN_WIDTH:
+                self.pedal_object.cord.x += VELOCITY_2.x

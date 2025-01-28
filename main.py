@@ -1,4 +1,4 @@
-import os
+# import os
 import pygame
 from pygame.locals import QUIT
 
@@ -7,7 +7,8 @@ from mod.constands import FPS, WIN_WIDTH, WIN_HEIGHT
 
 # set the window position to a constant in hyprland
 # os.environ["SDL_VIDEO_WINDOW_POS"] = "{},{}".format(200, 100)
-os.environ['SDL_VIDEO_WINDOW_POS'] = '-1650,100'  # Position window on the second monitor
+# os.environ['SDL_VIDEO_WINDOW_POS'] = '-1650,100'  # Position window on the second monitor
+
 
 def main():
     pygame.init()

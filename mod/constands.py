@@ -4,8 +4,8 @@ from .geometry import Vector2, Coordinate
 
 FPS: Final[int] = 60
 
-WIN_WIDTH: Final[int] = 1920
-WIN_HEIGHT: Final[int] = 1200
+WIN_WIDTH: Final[int] = 1000
+WIN_HEIGHT: Final[int] = 600
 
 RECT_SIZE_WIDTH_LIMITS: Final[Vector2] = Vector2(10, int(WIN_WIDTH / 3))
 RECT_SIZE_HEIGHT_LIMITS: Final[Vector2] = Vector2(10, int(WIN_HEIGHT / 3))
