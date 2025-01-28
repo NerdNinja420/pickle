@@ -99,7 +99,7 @@ class Rectangle:
         )
 
         x: Callable[[int], int] = lambda i: (i * (WIDTH + GAB) + l_pad)  # noqa: E731
-        y: Callable[[int], int] = lambda j: (j * (GAB + HEIGHT) + +t_pad)  # noqa: E731
+        y: Callable[[int], int] = lambda j: (j * (GAB + HEIGHT) + t_pad)  # noqa: E731
 
         return [
             Rectangle(

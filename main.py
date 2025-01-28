@@ -8,7 +8,6 @@ from pygame.locals import QUIT
 from mod.game import Game
 from mod.constands import FPS, WIN_WIDTH, WIN_HEIGHT
 
-# environ["SDL_VIDEO_WINDOW_POS"] = "{},{}".format(-1650, 100)
 if system() == "Linux":
     environ["SDL_VIDEO_WINDOW_POS"] = "{},{}".format(-1650, 100)
 

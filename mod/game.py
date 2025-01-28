@@ -21,6 +21,9 @@ from .constands import (
     COLOR_MID,
     COLOR_LOWER,
     COLOR_UPPER,
+    FONT,
+    FONT_SIZE_SCORE,
+    FONT_SIZE_END_MSG,
     VELOCITY,
     ACCELERATION,
 )
@@ -60,9 +63,9 @@ class Game:
             for i in range(n)
         ]
 
-    def pause(self, stop: int):
+    def pause(self, interval: int):
         start_time = pygame.time.get_ticks()
-        while pygame.time.get_ticks() - start_time < stop:
+        while pygame.time.get_ticks() - start_time < interval:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT or pygame.key.get_pressed()[pygame.K_ESCAPE]:
                     pygame.quit()
@@ -72,18 +75,18 @@ class Game:
         self.ball.uniform(self.delta_time)
 
     def draw_status(self):
-        font = pygame.font.SysFont("JetBrains Mono Nerd Font", 38)
-        score = font.render(f"Score: {self.score}", False, Color.TEXT.rgb())
+        font = pygame.font.SysFont(FONT, FONT_SIZE_SCORE)
+        score = font.render(f"Score: {self.score}", True, Color.TEXT.rgb())
         self.surface.blit(score, (GAB, GAB))
 
-        lifes = font.render(f"Lives: {self.lifes}", False, Color.TEXT.rgb())
+        lifes = font.render(f"Lives: {self.lifes}", True, Color.TEXT.rgb())
         self.surface.blit(lifes, (GAB, GAB * 4))
 
     def draw_end_msg(self):
         self.set_bg()
 
-        font = pygame.font.SysFont("JetBrains Mono Nerd Font", 100)
-        text = font.render("You are out of lifes!☹", False, Color.TEXT.rgb())
+        font = pygame.font.SysFont(FONT, FONT_SIZE_END_MSG)
+        text = font.render("You are out of lifes!☹", True, Color.TEXT.rgb())
         text_rect = text.get_rect(
             center=(self.surface.get_width() // 2, self.surface.get_height() // 2)
         )
