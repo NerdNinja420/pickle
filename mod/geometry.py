@@ -39,10 +39,13 @@ class Vector2:
 
         return sqrt(self.x**2 + self.y**2)
 
+    def normalize(self) -> Vector2:
+        return Vector2(self.x / self.abs(), self.y / self.abs())
+
     def dot(self, other: Vector2) -> float:
         return self.x * other.x + self.y * other.y
 
-    def copy(self) -> Vector2:
+    def clone(self) -> Vector2:
         return self.__class__(self.x, self.y)
 
     @classmethod
