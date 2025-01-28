@@ -1,5 +1,5 @@
 # pickle - Arkanoid but much better
-![ScreenShot_1](./assets/pong.png)
+![ScreenShot_1](./assets/pickle.png)
 
 ## Controls
 
@@ -20,7 +20,7 @@
 - Pygame 2.6.1 or later
 
 ## Installation
-### Linux
+### Arch Linux
 
 ```bash
    git clone https://github.com/NerdNinja420/pickle

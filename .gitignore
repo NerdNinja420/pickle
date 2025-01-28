@@ -1,5 +1,4 @@
-tetrix_venv/
-soyana_venv/
+pickle_venv/
 .git/
 __pycache__/
 mod/__pycache__/
