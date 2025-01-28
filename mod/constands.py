@@ -1,15 +1,21 @@
 from typing import Callable, Final
 from platform import system
 
-
 from .geometry import Size, Vector2, Coordinate
+
 
 FPS: Final[int] = 60
 EPS: float = 5
-GAB: Final[int] = 10
 
-WIN_WIDTH: Final[int] = 1000
-WIN_HEIGHT: Final[int] = 600
+if system() == "Linux":
+    GAB: Final[int] = 20
+    WIN_WIDTH: Final[int] = 1800
+    WIN_HEIGHT: Final[int] = 1000
+else:
+    GAB: Final[int] = 10  # type: ignore
+    WIN_WIDTH: Final[int] = 1000  # type: ignore
+    WIN_HEIGHT: Final[int] = 600  # type: ignore
+
 
 RECT_SIZE_WIDTH_LIMITS: Final[Vector2] = Vector2(10, int(WIN_WIDTH / 3))
 RECT_SIZE_HEIGHT_LIMITS: Final[Vector2] = Vector2(10, int(WIN_HEIGHT / 3))
@@ -25,7 +31,7 @@ VELOCITY: Final[Vector2] = Vector2(20, 20)
 ACCELERATION: Final[Vector2] = Vector2(0.5, 0.5)
 
 
-PEDAL_WIDTH: Final[int] = int(WIN_WIDTH / 10)
+PEDAL_WIDTH: Final[int] = int(WIN_WIDTH / 15)
 PEDAL_HEIGHT: Final[int] = int(WIN_HEIGHT / 70)
 PEDAL_COORDINATES: Final[Coordinate] = Coordinate(
     int((WIN_WIDTH / 2) - (PEDAL_WIDTH / 2)), WIN_HEIGHT - PEDAL_HEIGHT * 4
@@ -34,12 +40,12 @@ PEDAL_COORDINATES: Final[Coordinate] = Coordinate(
 BALL_WIDTH: Final[int] = int(WIN_WIDTH / 70)
 BALL_HEIGHT: Final[int] = BALL_WIDTH
 BALL_SIZE: Final[Size] = Size(BALL_WIDTH, BALL_HEIGHT)
-BALL_VEL: Vector2 = Vector2(1, 1)
+BALL_START_VEL: Vector2 = Vector2(1, 1)
+BALL_MIN_VEL: Vector2 = Vector2(5, 5)
 BALL_MAX_VEL: Vector2 = Vector2(20, 20)
 BALL_COORDINATES: Callable[[int], Coordinate] = lambda i: Coordinate(  # noqa: E731
     GAB * 2, GAB * 16 + (GAB + BALL_HEIGHT) * i
 )
-
 
 COL: Final[int] = 3
 ROW: Final[int] = 5

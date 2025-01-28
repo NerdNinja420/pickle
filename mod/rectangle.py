@@ -62,6 +62,12 @@ class Rectangle:
         else:
             self.vel = self.vel + acce
 
+    def deaccelerate(self, acce: Vector2, same_dir: bool):
+        if same_dir:
+            self.vel = self.vel - self.vel.normalize() * acce.abs()
+        else:
+            self.vel = self.vel - acce
+
     def handle_collision_screen(self):
         if not (0 <= self.coord.x + self.vel.x <= WIN_WIDTH - self.dim.x):
             self.vel.x = -self.vel.x

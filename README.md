@@ -1,5 +1,18 @@
-# Soyana - Arkanoid-like Game
+# pickle - Arkanoid but much better
 ![ScreenShot_1](./assets/pong.png)
+
+## Controls
+
+| Key    | Action              |
+| ------ | ------------------- |
+| A      | Move Left           |
+| D      | Move Right          |
+| W      | Move Forward        |
+| S      | Move Backward       |
+| J      | Decelerate the Ball |
+| K      | Accelerate the Ball |
+| Space  | Restart the Game    |
+| Escape | Quit the Game       |
 
 ## Requirements
 
@@ -7,12 +20,13 @@
 - Pygame 2.6.1 or later
 
 ## Installation
+### Linux
 
 ```bash
-   git clone https://github.com/NerdNinja420/arkanoid-like-game.git
-   cd arkanoid-like-game
-   pip install pygame
-   python main.py
+   git clone https://github.com/NerdNinja420/pickle
+   cd pickle
+   ./install.sh
+   pickle
 ```
 
 ## License
